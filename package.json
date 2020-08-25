@@ -21,7 +21,12 @@
     "build:cjs": "esbuild --bundle src/graphql-client.ts --outfile=dist/graphql-client.js --target=esnext --platform=browser --format=cjs",
     "build:types": "tsc",
     "build": "run-p build:*",
-    "test": "uvu -r ts-node/register tests"
+    "format": "prettier --write \"{src,tests}/**/*.ts\"",
+    "test": "uvu -r ts-node/register tests",
+    "test:coverage": "c8 --include=src npm test",
+    "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
+    "preinstall": "npx only-allow pnpm",
+    "prepublishOnly": "run-s format build test"
   },
   "keywords": [
     "graphql",
@@ -30,9 +35,11 @@
   ],
   "devDependencies": {
     "@types/node-fetch": "^2.5.7",
+    "c8": "^7.3.0",
     "esbuild": "^0.6.27",
     "node-fetch": "^2.6.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2",
     "uvu": "^0.3.3"

@@ -1,14 +1,14 @@
-import { GraphQLClient, gql } from "../";
-import { suite } from "uvu";
-import { is, ok, type } from "uvu/assert";
-import fetch from "node-fetch";
+import { GraphQLClient, gql } from '../';
+import { suite } from 'uvu';
+import { is, ok, type } from 'uvu/assert';
+import fetch from 'node-fetch';
 
 // @ts-ignore
 globalThis.fetch = fetch;
 
-const graphqlClient = suite("graphql-client");
+const graphqlClient = suite('graphql-client');
 
-graphqlClient("gql function should return a minified string", () => {
+graphqlClient('gql function should return a minified string', () => {
   const query = gql`
     query {
       getAllMovies {
@@ -20,8 +20,8 @@ graphqlClient("gql function should return a minified string", () => {
   is(query, `query { getAllMovies { title } }`);
 });
 
-graphqlClient("client should be able to send a graphql query", async () => {
-  const url = "https://countries.trevorblades.com/";
+graphqlClient('client should be able to send a graphql query', async () => {
+  const url = 'https://countries.trevorblades.com/';
   const client = GraphQLClient(url);
   const query = gql`
     query getAllCountries {
@@ -38,26 +38,23 @@ graphqlClient("client should be able to send a graphql query", async () => {
   ok(Array.isArray(countries));
 });
 
-graphqlClient(
-  "client should be able to send a graphql query with variables",
-  async () => {
-    const url = "https://countries.trevorblades.com/";
-    const client = GraphQLClient(url);
-    const query = gql`
-      query getAllCountries($code: ID!) {
-        country(code: $code) {
-          code
-          name
-        }
+graphqlClient('client should be able to send a graphql query with variables', async () => {
+  const url = 'https://countries.trevorblades.com/';
+  const client = GraphQLClient(url);
+  const query = gql`
+    query getAllCountries($code: ID!) {
+      country(code: $code) {
+        code
+        name
       }
-    `;
-    const variables = { code: "SE" };
-    const { country } = await client.request<{
-      country: { code: string; name: string };
-    }>(query, variables);
+    }
+  `;
+  const variables = { code: 'SE' };
+  const { country } = await client.request<{
+    country: { code: string; name: string };
+  }>(query, variables);
 
-    type(country, "object");
-  }
-);
+  type(country, 'object');
+});
 
 graphqlClient.run();

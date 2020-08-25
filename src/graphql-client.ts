@@ -13,7 +13,7 @@
  * client.request(query).then(console.log)
  * ```
  */
-export function GraphQLClient(url: string, auth = "") {
+export function GraphQLClient(url: string, auth = '') {
   let authorization = auth;
 
   /**
@@ -63,14 +63,11 @@ export function GraphQLClient(url: string, auth = "") {
    * // => { getDinosaur: { name: 'Velociraptor', height: 150, speed: 70 } }
    * ```
    */
-  const request = <T = any>(
-    query: string,
-    variables?: Record<string, any>
-  ): Promise<T> => {
+  const request = <T = any>(query: string, variables?: Record<string, any>): Promise<T> => {
     return fetch(url, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({ query, variables }),
-      headers: { authorization, "content-type": "application/json" },
+      headers: { authorization, 'content-type': 'application/json' },
     })
       .then((r) => r.json())
       .then(({ data, errors }) => {
@@ -106,7 +103,7 @@ export function GraphQLClient(url: string, auth = "") {
  */
 export const gql = (query: TemplateStringsArray) =>
   query
-    .join(" ")
-    .replace(/\r?\n|\r/g, "")
-    .replace(/\s{2,}/g, " ")
+    .join(' ')
+    .replace(/\r?\n|\r/g, '')
+    .replace(/\s{2,}/g, ' ')
     .trim();
