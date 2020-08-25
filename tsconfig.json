@@ -11,7 +11,8 @@
     "declaration": true,
     "target": "ESNext",
     "module": "ESNext",
-    "outDir": "types"
+    "outDir": "types",
+    "moduleResolution": "node"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
