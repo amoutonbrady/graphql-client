@@ -11,6 +11,10 @@
   "module": "dist/graphql-client.esm.js",
   "browser": "dist/graphql-client.min.js",
   "types": "types/graphql-client.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
   "scripts": {
     "build:min": "esbuild --bundle src/graphql-client.ts --outfile=dist/graphql-client.min.js --target=esnext --platform=browser --format=iife --global-name=GraphClient --minify",
     "build:esm": "esbuild --bundle src/graphql-client.ts --outfile=dist/graphql-client.esm.js --target=esnext --platform=browser --format=esm",
