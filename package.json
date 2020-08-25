@@ -4,6 +4,7 @@
   "description": "Minimalistic GraphQL client",
   "author": "Alexandre Mouton-Brady <amoutonbrady@gmail.com>",
   "private": false,
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
