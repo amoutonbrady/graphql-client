@@ -23,7 +23,7 @@
     "build:types": "tsc",
     "build": "run-p build:*",
     "format": "prettier --write \"{src,tests}/**/*.ts\"",
-    "test": "uvu -r ts-node/register tests",
+    "test": "pnpm build && uvu -r ts-node/register tests",
     "test:coverage": "c8 --include=src npm test",
     "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
     "preinstall": "npx only-allow pnpm",

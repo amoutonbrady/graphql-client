@@ -11,6 +11,7 @@ const graphqlClient = suite('graphql-client');
 graphqlClient('gql function should return a minified string', () => {
   const query = gql`
     query {
+      # Test comment, this should be removed
       getAllMovies {
         title
       }
