@@ -104,7 +104,7 @@ export function GraphQLClient(url: string, auth = '') {
 export const gql = (query: TemplateStringsArray) =>
   query
     .join(' ')
-    .replace(/#.+\r?\n|\r/g, "")
+    .replace(/#.+\r?\n|\r/g, '')
     .replace(/\r?\n|\r/g, '')
     .replace(/\s{2,}/g, ' ')
     .trim();
