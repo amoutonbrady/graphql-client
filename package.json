@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "@amoutonbrady/graphql-client",
   "description": "Minimalistic GraphQL client",
   "author": "Alexandre Mouton-Brady <amoutonbrady@gmail.com>",
@@ -37,7 +37,6 @@
     "test": "pnpm build && uvu -r ts-node/register tests",
     "test:coverage": "c8 --include=src npm test",
     "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
-    "preinstall": "npx only-allow pnpm",
     "prepublishOnly": "run-s format build test"
   },
   "keywords": [
