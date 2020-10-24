@@ -1,9 +1,16 @@
+import type nodeFetch from 'node-fetch';
+
+interface Options {
+  fetch?: typeof window.fetch | typeof nodeFetch;
+  auth?: string;
+}
+
 /**
  * Create a new GraphQL client that hold the URL of the instance
  * and the authorization header if set later on.
  *
  * @param {string} url - Url of the graphql endpoint
- * @param {string} [auth=""] - Optional authorization header
+ * @param {Options} options - Optional authorization header & fetch instance
  *
  * @example
  * ```ts
@@ -13,8 +20,8 @@
  * client.request(query).then(console.log)
  * ```
  */
-export function GraphQLClient(url: string, auth = '') {
-  let authorization = auth;
+export function GraphQLClient(url: string, options?: Options) {
+  let authorization = options.auth || '';
 
   /**
    * Set the token to send to each request within the authorization request.
@@ -23,7 +30,10 @@ export function GraphQLClient(url: string, auth = '') {
    *
    * @example
    * ```ts
-   * const client = GraphQLClient('https://localhost:4000/graphql');
+   * const client = GraphQLClient(
+   *   'https://localhost:4000/graphql',
+   *   { auth: 'Bearer blabla', fetch: window.fetch }
+   * );
    * const token = getTokenSomehow();
    * const query = getQuery();
    *
@@ -64,7 +74,7 @@ export function GraphQLClient(url: string, auth = '') {
    * ```
    */
   const request = <T = any>(query: string, variables?: Record<string, any>): Promise<T> => {
-    return fetch(url, {
+    return (options.fetch as typeof fetch)(url, {
       method: 'POST',
       body: JSON.stringify({ query, variables }),
       headers: { authorization, 'content-type': 'application/json' },

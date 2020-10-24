@@ -25,6 +25,9 @@ import { GraphQLClient, gql } from '@amoutonbrady/graphql-client';
 // A function that creates a client
 // You can pass a token a second parameter
 const client = GraphQLClient('https://jurassic.park/graphql');
+
+// You can also provide your own fetch if you want to
+// const client = GraphQLClient('https://jurassic.park/graphql', { fetch: require('node-fetch') });
 const token = getToken();
 
 // You can set a bearer token after wards
