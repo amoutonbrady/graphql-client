@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "@amoutonbrady/graphql-client",
   "description": "Minimalistic GraphQL client",
   "author": "Alexandre Mouton-Brady <amoutonbrady@gmail.com>",
