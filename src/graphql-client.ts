@@ -20,8 +20,11 @@ interface Options {
  * client.request(query).then(console.log)
  * ```
  */
-export function GraphQLClient(url: string, options: Options = {}) {
-  let authorization = options.auth || '';
+export function GraphQLClient(
+  url: string,
+  options: Options = { fetch: fetch.bind(window), auth: '' },
+) {
+  let authorization = options.auth;
 
   /**
    * Set the token to send to each request within the authorization request.
