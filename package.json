@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "@amoutonbrady/graphql-client",
   "description": "Minimalistic GraphQL client",
   "author": "Alexandre Mouton-Brady <amoutonbrady@gmail.com>",
@@ -12,29 +12,19 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/graphql-client.js",
-  "module": "dist/graphql-client.esm.js",
-  "browser": "dist/graphql-client.min.js",
-  "types": "types/graphql-client.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/graphql-client.esm.js",
-      "browser": "./dist/graphql-client.min.js",
-      "require": "./dist/graphql-client.js"
-    }
-  },
+  "main": "dist/esm/graphql-client.js",
+  "module": "dist/esm/graphql-client.js",
+  "types": "dist/types/graphql-client.d.ts",
+  "exports": "./dist/esm/graphql-client.js",
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
   "scripts": {
-    "build:min": "esbuild --bundle src/graphql-client.ts --outfile=dist/graphql-client.min.js --target=esnext --platform=browser --format=iife --global-name=GraphClient --minify",
-    "build:esm": "esbuild --bundle src/graphql-client.ts --outfile=dist/graphql-client.esm.js --target=esnext --platform=browser --format=esm",
-    "build:cjs": "esbuild --bundle src/graphql-client.ts --outfile=dist/graphql-client.js --target=esnext --platform=browser --format=cjs",
+    "build:esm": "esbuild --bundle src/graphql-client.ts --outfile=dist/esm/graphql-client.js --target=esnext --platform=browser --format=esm",
     "build:types": "tsc",
     "build": "run-p build:*",
     "format": "prettier --write \"{src,tests}/**/*.ts\"",
-    "test": "pnpm build && uvu -r ts-node/register tests",
+    "test": "pnpm build && uvu -r jiti/register tests",
     "test:coverage": "c8 --include=src npm test",
     "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
     "prepublishOnly": "run-s format build test"
@@ -45,15 +35,15 @@
     "minimal"
   ],
   "devDependencies": {
-    "@types/node-fetch": "^2.5.7",
-    "c8": "^7.3.4",
-    "esbuild": "^0.6.34",
+    "@types/node-fetch": "^2.5.10",
+    "c8": "^7.7.2",
+    "esbuild": "^0.12.6",
+    "jiti": "^1.10.1",
     "node-fetch": "^2.6.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.1.2",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.3",
-    "uvu": "^0.3.4"
+    "prettier": "^2.3.1",
+    "typescript": "^4.3.2",
+    "uvu": "^0.5.1"
   },
   "license": "MIT"
 }

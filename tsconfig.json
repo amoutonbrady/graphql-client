@@ -1,17 +1,10 @@
 {
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "module": "commonjs"
-    },
-    "include": ["tests/**/*"]
-  },
   "compilerOptions": {
     "emitDeclarationOnly": true,
     "declaration": true,
     "target": "ESNext",
     "module": "ESNext",
-    "outDir": "types",
+    "outDir": "dist/types",
     "moduleResolution": "node"
   },
   "include": ["src"],
