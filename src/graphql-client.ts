@@ -25,9 +25,30 @@ export function GraphQLClient(
   options: Options = { fetch: fetch.bind(window), auth: '' },
 ) {
   let authorization = options.auth;
+  let headers = {};
+
+	/**
+	 * Set headers. This merges the previous headers with the new one by default.
+	 * 
+	 * @param {Record<string, string> newHeaders - The headers to set
+	 * @param {boolean} override - Whether to merge or override the previous headers
+	 *
+	 * @example
+	 * ```ts
+   * const client = GraphQLClient('https://localhost:4000/graphql');
+   * const query = getQuery();
+   *
+   * client.setHeaders({ Token: 'my-shiny-token' });
+   *
+   * client.request(query).then(console.log)
+	 * ```
+	 */
+  const setHeaders = (newHeaders: Record<string, string>, override: boolean = false) => {
+    headers = override ? newHeaders : { ...headers, ...newHeaders };
+  }
 
   /**
-   * Set the token to send to each request within the authorization request.
+   * Set the token to send to each request within the authorization header.
    *
    * @param {string} token - The token string
    *
@@ -43,7 +64,6 @@ export function GraphQLClient(
    * client.setAuth(`Bearer ${token}`);
    *
    * client.request(query).then(console.log)
-   *
    */
   const setAuth = (token: string) => (authorization = token);
 
@@ -80,7 +100,7 @@ export function GraphQLClient(
     return (options.fetch as typeof fetch)(url, {
       method: 'POST',
       body: JSON.stringify({ query, variables }),
-      headers: { authorization, 'content-type': 'application/json' },
+      headers: { authorization, 'content-type': 'application/json', ...headers },
     })
       .then((r) => r.json())
       .then(({ data, errors }) => {
@@ -92,6 +112,7 @@ export function GraphQLClient(
   return {
     request,
     setAuth,
+		setHeaders,
   };
 }
 

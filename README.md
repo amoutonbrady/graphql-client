@@ -8,7 +8,7 @@ Features:
 
 - Typescript ready: written in Typescript
 - Fully tested: literally 3 functions
-- Minimal footprint: 30 loc, [~800 bytes minfied](https://bundlephobia.com/result?p=@amoutonbrady/graphql-client@0.0.2)
+- Minimal footprint: 30 loc, [~800 bytes minified](https://bundlephobia.com/result?p=@amoutonbrady/graphql-client@0.0.2)
 - No BS cache or w/e, ask data and you shall receive
 
 ## Installation
@@ -32,6 +32,9 @@ const token = getToken();
 
 // You can set a bearer token after wards
 client.setAuth(`Bearer ${token}`);
+
+// You can set abitrary headers
+client.setHeaders({ Token: token });
 
 // gql is just a pass through that minify the string for leaner payload
 const query = gql`
