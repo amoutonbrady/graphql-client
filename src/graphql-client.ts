@@ -20,7 +20,7 @@ interface Options {
  * client.request(query).then(console.log)
  * ```
  */
-export function GraphQLClient(url: string, options: Options) {
+export function GraphQLClient(url: string, options: Options = {}) {
   let authorization = options.auth || '';
   let headers = {};
 
