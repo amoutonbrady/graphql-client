@@ -20,32 +20,32 @@ interface Options {
  * client.request(query).then(console.log)
  * ```
  */
-export function GraphQLClient(
-  url: string,
-  options: Options = { fetch: fetch.bind(window), auth: '' },
-) {
-  let authorization = options.auth;
+export function GraphQLClient(url: string, options: Options) {
+  let authorization = options.auth || '';
   let headers = {};
 
-	/**
-	 * Set headers. This merges the previous headers with the new one by default.
-	 * 
-	 * @param {Record<string, string> newHeaders - The headers to set
-	 * @param {boolean} override - Whether to merge or override the previous headers
-	 *
-	 * @example
-	 * ```ts
+  // This is from the awesome redaxios lib: https://github.com/developit/redaxios/blob/master/src/index.js#L196
+  const fetchFunc = options.fetch || fetch;
+
+  /**
+   * Set headers. This merges the previous headers with the new one by default.
+   *
+   * @param {Record<string, string> newHeaders - The headers to set
+   * @param {boolean} override - Whether to merge or override the previous headers
+   *
+   * @example
+   * ```ts
    * const client = GraphQLClient('https://localhost:4000/graphql');
    * const query = getQuery();
    *
    * client.setHeaders({ Token: 'my-shiny-token' });
    *
    * client.request(query).then(console.log)
-	 * ```
-	 */
+   * ```
+   */
   const setHeaders = (newHeaders: Record<string, string>, override: boolean = false) => {
     headers = override ? newHeaders : { ...headers, ...newHeaders };
-  }
+  };
 
   /**
    * Set the token to send to each request within the authorization header.
@@ -97,7 +97,7 @@ export function GraphQLClient(
    * ```
    */
   const request = <T = any>(query: string, variables?: Record<string, any>): Promise<T> => {
-    return (options.fetch as typeof fetch)(url, {
+    return (fetchFunc as typeof fetch)(url, {
       method: 'POST',
       body: JSON.stringify({ query, variables }),
       headers: { authorization, 'content-type': 'application/json', ...headers },
@@ -112,7 +112,7 @@ export function GraphQLClient(
   return {
     request,
     setAuth,
-		setHeaders,
+    setHeaders,
   };
 }
 
