@@ -1,5 +1,5 @@
 {
-  "version": "0.3.2",
+  "version": "0.4.0",
   "name": "@amoutonbrady/graphql-client",
   "description": "Minimalistic GraphQL client",
   "author": "Alexandre Mouton-Brady <amoutonbrady@gmail.com>",
@@ -12,10 +12,15 @@
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "main": "dist/esm/graphql-client.js",
   "module": "dist/esm/graphql-client.js",
   "types": "dist/types/graphql-client.d.ts",
-  "exports": "./dist/esm/graphql-client.js",
+  "exports": {
+    ".": {
+      "default": "./dist/esm/graphql-client.js"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -24,10 +29,9 @@
     "build:types": "tsc",
     "build": "run-p build:*",
     "format": "prettier --write \"{src,tests}/**/*.ts\"",
-    "test": "pnpm build && uvu -r jiti/register tests",
-    "test:coverage": "c8 --include=src npm test",
-    "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
-    "prepublishOnly": "run-s format build test"
+    "test": "pnpm build && vitest run",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "run-s format test"
   },
   "keywords": [
     "graphql",
@@ -35,15 +39,15 @@
     "minimal"
   ],
   "devDependencies": {
-    "@types/node-fetch": "^2.5.12",
-    "c8": "^7.8.0",
-    "esbuild": "^0.12.17",
-    "jiti": "^1.11.0",
-    "node-fetch": "^2.6.1",
+    "esbuild": "^0.17.16",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.2",
-    "typescript": "^4.3.5",
-    "uvu": "^0.5.1"
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4",
+    "vitest": "^0.30.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.5",
+    "pnpm": ">=8"
+  }
 }

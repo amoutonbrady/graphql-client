@@ -1,7 +1,4 @@
-import type nodeFetch from 'node-fetch';
-
 interface Options {
-  fetch?: typeof window.fetch | typeof nodeFetch;
   auth?: string;
 }
 
@@ -23,9 +20,6 @@ interface Options {
 export function GraphQLClient(url: string, options: Options = {}) {
   let authorization = options.auth || '';
   let headers = {};
-
-  // This is from the awesome redaxios lib: https://github.com/developit/redaxios/blob/master/src/index.js#L196
-  const fetchFunc = options.fetch || fetch;
 
   /**
    * Set headers. This merges the previous headers with the new one by default.
@@ -97,12 +91,18 @@ export function GraphQLClient(url: string, options: Options = {}) {
    * ```
    */
   const request = <T = any>(query: string, variables?: Record<string, any>): Promise<T> => {
-    return (fetchFunc as typeof fetch)(url, {
+    const finalHeaders: HeadersInit = { 'content-type': 'application/json', ...headers };
+
+    if (authorization) {
+      finalHeaders.authorization = authorization;
+    }
+
+    return fetch(url, {
       method: 'POST',
       body: JSON.stringify({ query, variables }),
-      headers: { authorization, 'content-type': 'application/json', ...headers },
+      headers: finalHeaders,
     })
-      .then((r) => r.json())
+      .then((response) => response.json())
       .then(({ data, errors }) => {
         if (errors) throw errors;
         return data;
